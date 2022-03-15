@@ -1,5 +1,12 @@
 import '../styles/popup.scss';
 
+document.getElementById('big-title').addEventListener('click', () => {
+    const sellomatrURL = "https://github.com/NathanMLu/Sellomatr";
+    chrome.tabs.create({url: sellomatrURL}).then(r =>
+        console.log(r)
+    );
+})
+
 document.getElementById('open-spreadsheet').addEventListener('click', () => {
     const spreadSheetURL = "https://docs.google.com/spreadsheets/d/1Ps3S6bI24d-dK7UHJ6cOop9g7pkSgKNLbte9OJerOSw/edit#gid=0";
     chrome.tabs.create({url: spreadSheetURL}).then(r =>
