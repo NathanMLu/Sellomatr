@@ -1,3 +1,21 @@
+# Tech4All
+
+# Plans
+
+- Automatically input all sales into a spreadsheet
+- Send emails with how much I made that week
+- Automatically print label when order is placed
+- Send a message to the buyer automatically
+- Scrape the best lots from different liquidation sites
+
+# Technologies
+
+- eBay API
+- Sheets API
+- Javascript
+- Kiosk Printing Chrome
+- Chrome Extension
+
 ![Chrome Extension Webpack](https://user-images.githubusercontent.com/21238816/147307879-a3cb179e-3368-412a-88db-284474183884.png)
 Get started with Chrome extensions development using webpack, TypeScript, Sass, and more.
 
