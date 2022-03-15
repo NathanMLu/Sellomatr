@@ -2,7 +2,7 @@
 
 $primary-color: #ffbf00;
 $dark-color: #00171f;
-$light-color: #75b9be;
+$secondary-color: #75b9be;
 $accent: #9e2b25;
 $light-color: #eee5e9;
 
@@ -11,16 +11,10 @@ body {
   color: $light-color;
 
   // Borders
-  border: 2px solid $light-color;
-}
-
-.input-group {
-  display: flex;
-
-  margin: 1rem 0;
-
-  flex-direction: row;
-  gap: 1rem;
-
-  align-items: center;
+  border: 1px solid $light-color;
+  height: 20rem;
+  margin: 0 auto;
+  padding: 1rem;
+  position: relative;
+  width: 15rem;
 }

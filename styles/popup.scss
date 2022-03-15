@@ -1,15 +1,25 @@
 @import 'common.scss';
 
 .container {
-  min-height: 200px;
-  min-width: 300px;
-
-  padding: 2rem;
-
+  height: 100%;
+  min-height: 100%;
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
   justify-content: center;
+}
+
+#big-title {
+  font-size: 1rem;
+  flex: 1;
+}
+
+#sell-title {
+  font-style: italic;
+  color: $primary-color;
+}
+
+#amount {
+  font-weight: bold;
+  color: $primary-color;
 }
