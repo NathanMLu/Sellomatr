@@ -9,10 +9,16 @@
   justify-content: center;
 }
 
-// Top Title
+/*
+ * Title Section
+ */
 #big-title {
   font-size: 1rem;
   color: $light-color;
+  h1 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 #sell-title {
@@ -20,43 +26,51 @@
   color: $primary-color;
 }
 
-// Amount Made
+/*
+ * Amount Section
+ */
 #amount {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.3fr;
   width: 100%;
-  grid-gap: 1.5rem;
+  grid-gap: 1rem;
   text-align: center;
   font-weight: bold;
   color: $primary-color;
 }
 
-// Profit Progress Bars
-#progress-goal {
-  padding-top: 1rem;
-  margin-left: auto;
-  margin-right: 0;
-}
-
-#profit-goal-headline{
+// Profit Analytics and Goal
+#profit-goal-headline {
   color: $accent-color;
 }
+
 #profit {
   margin-left: 0;
   margin-right: auto;
+
   h3 {
     font-size: 1rem;
     color: $accent-color;
+    margin-top: 0.6rem;
     margin-bottom: 0.25rem;
   }
+
   h1 {
     font-size: 2.25rem;
     margin: 0;
   }
+
   p {
     margin-top: 0.5rem;
   }
+}
+
+// Profit Progress Ring
+#progress-goal {
+  padding-top: 1rem;
+  margin-left: auto;
+  margin-right: 0;
 }
 
 @keyframes growProgressBar {
