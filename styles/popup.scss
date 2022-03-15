@@ -9,9 +9,10 @@
   justify-content: center;
 }
 
+// Top Title
 #big-title {
   font-size: 1rem;
-  flex: 1;
+  color: $light-color;
 }
 
 #sell-title {
@@ -19,7 +20,74 @@
   color: $primary-color;
 }
 
+// Amount Made
 #amount {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  grid-gap: 1rem;
+  text-align: center;
   font-weight: bold;
   color: $primary-color;
+}
+
+#profit {
+  padding-top: 1rem;
+  margin: 0 auto;
+}
+
+// Profit Progress Bars
+@keyframes growProgressBar {
+  0%, 33% {
+    --pgPercentage: 0;
+  }
+  100% {
+    --pgPercentage: var(--value);
+  }
+}
+
+@property --pgPercentage {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+div[role="progressbar"] {
+  --size: 5rem;
+  --pgPercentage: var(--value);
+  animation: growProgressBar 3s 1 forwards;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(closest-side, white 80%, transparent 0 99.9%, white),
+  conic-gradient($primary-color calc(var(--pgPercentage) * 1%), #FAF3F0 0);
+  font-size: calc(var(--size) / 5);
+  color: $primary-color;
+}
+
+div[role="progressbar"]::before {
+  counter-reset: percentage var(--value);
+  content: counter(percentage) '%';
+}
+
+// Bottom Link Bar
+#link-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+#link-bar button {
+  padding: 0.5rem 0.5rem;
+  border-radius: 0.25rem;
+  border: none;
+  background-color: $accent-color;
+  color: $light-color;
+  cursor: pointer;
 }

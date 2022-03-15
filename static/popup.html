@@ -15,18 +15,27 @@
         </h1>
     </div>
 
+    <div id="amount">
+        <div id="profit">
+            <div role="progressbar" id="profit-bar" aria-valuemin="0" aria-valuemax="100" style="--value:21">
+            </div>
+        </div>
 
-    <h2>
-        You made
-        <span id="amount">
-            $<span id="earned">34.69</span>
-        </span>
-        today!
-    </h2>
+    </div>
 
-    <p>Edit <u>static/popup.html</u> to change this page!</p>
+    <div id="link-bar">
+        <button id="open-spreadsheet">
+            Spreadsheet
+        </button>
 
-    <button id="go-to-options" class="button" style="margin-top: 2rem;">Open options page</button>
+        <button id="open-ebay">
+            eBay
+        </button>
+
+        <button id="open-calculator">
+            Calculator
+        </button>
+    </div>
 </div>
 
 <script src="popup.js"></script>
