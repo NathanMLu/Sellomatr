@@ -1,8 +1,17 @@
 @import 'normalize.css';
 
+$primary-color: #ffbf00;
+$dark-color: #00171f;
+$light-color: #75b9be;
+$accent: #9e2b25;
+$light-color: #eee5e9;
+
 body {
-  background-color: #292d3e;
-  color: #ffffff;
+  background-color: $dark-color;
+  color: $light-color;
+
+  // Borders
+  border: 2px solid $light-color;
 }
 
 .input-group {
