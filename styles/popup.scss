@@ -26,18 +26,39 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  grid-gap: 1rem;
+  grid-gap: 1.5rem;
   text-align: center;
   font-weight: bold;
   color: $primary-color;
 }
 
-#profit {
+// Profit Progress Bars
+#progress-goal {
   padding-top: 1rem;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: 0;
 }
 
-// Profit Progress Bars
+#profit-goal-headline{
+  color: $accent-color;
+}
+#profit {
+  margin-left: 0;
+  margin-right: auto;
+  h3 {
+    font-size: 1rem;
+    color: $accent-color;
+    margin-bottom: 0.25rem;
+  }
+  h1 {
+    font-size: 2.25rem;
+    margin: 0;
+  }
+  p {
+    margin-top: 0.5rem;
+  }
+}
+
 @keyframes growProgressBar {
   0%, 33% {
     --pgPercentage: 0;
