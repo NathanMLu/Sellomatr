@@ -1,6 +1,6 @@
 {
-  "name": "Tech4All Bot",
-  "description": "Automate your eBay store",
+  "name": "Sellomatr",
+  "description": "Automate your resale business and stop worrying about logistics ever again.",
   "version": "1.0.0",
   "manifest_version": 3,
   "background": {
@@ -21,16 +21,16 @@
     "default_title": "My basic Chrome extension",
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "/icons/16.png",
-      "32": "/icons/32.png",
-      "48": "/icons/48.png",
-      "128": "/icons/128.png"
+      "16": "/icons/icon.png",
+      "32": "/icons/icon.png",
+      "48": "/icons/icon.png",
+      "128": "/icons/icon.png"
     }
   },
   "icons": {
-    "16": "/icons/16.png",
-    "32": "/icons/32.png",
-    "48": "/icons/48.png",
-    "128": "/icons/128.png"
+    "16": "/icons/icon.png",
+    "32": "/icons/icon.png",
+    "48": "/icons/icon.png",
+    "128": "/icons/icon.png"
   }
 }
