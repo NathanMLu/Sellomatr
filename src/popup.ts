@@ -26,15 +26,15 @@ document.getElementById('open-ebay').addEventListener('click', () => {
 });
 
 document.getElementById('open-calculator').addEventListener('click', () => {
-    // const calculatorURL = "https://docs.google.com/spreadsheets/d/1MDSxxPRpJI7fpQgjq1vVuPt6wos-gYPfp1TBlAKNxpY/edit#gid=154520879";
-    // chrome.tabs.create({url: calculatorURL}).then(r =>
-    //     console.log(r)
-    // );
+    const calculatorURL = "https://docs.google.com/spreadsheets/d/1MDSxxPRpJI7fpQgjq1vVuPt6wos-gYPfp1TBlAKNxpY/edit#gid=154520879";
+    chrome.tabs.create({url: calculatorURL}).then(r =>
+        console.log(r)
+    );
 
-    const profit = getRandomInt(100);
-    const goal = getRandomInt(400);
-    const choice = getRandomInt(4);
-    updateAll(profit, goal, choice);
+    // const profit = getRandomInt(100);
+    // const goal = getRandomInt(400);
+    // const choice = getRandomInt(4);
+    // updateAll(profit, goal, choice);
 });
 
 
