@@ -30,9 +30,11 @@ document.getElementById('open-calculator').addEventListener('click', () => {
     // chrome.tabs.create({url: calculatorURL}).then(r =>
     //     console.log(r)
     // );
-    const num = getRandomInt(100)
-    console.log(num)
-    setPercentage(String(num));
+
+    const profit = getRandomInt(100);
+    const goal = getRandomInt(400);
+    const choice = getRandomInt(4);
+    updateAll(profit, goal, choice);
 });
 
 
@@ -40,6 +42,14 @@ document.getElementById('open-calculator').addEventListener('click', () => {
  * Helper Functions
  */
 
+function updateAll(profit: number, goal: number, choice: number) {
+    setProfit(String(profit));
+    setProfitTime(choice);
+    setProfitGoal(String(goal));
+    setPercentage(String(calculatePercentage(profit, goal)));
+}
+
+// Exclusive, getRandomInt(4) = 0, 1, 2, 3
 function getRandomInt(max: number) {
     return Math.floor(Math.random() * Math.floor(max));
 }
@@ -47,30 +57,33 @@ function getRandomInt(max: number) {
 function setPercentage(percentage: string) {
     const profitBar = document.getElementById('profit-bar');
     profitBar.style.setProperty('--value', percentage);
+    profitBar.style.animation = 'none';
+    profitBar.offsetHeight;
+    profitBar.style.animation = null;
 }
 
 function setProfit(profit: string) {
-    document.getElementById('profit-today').innerText = profit;
+    const num = Number(profit).toFixed(2);
+    document.getElementById('profit-today').innerText = String(num);
 }
 
-function setProfitTime(profit: number) {
-    if (profit == 1) {
+function setProfitGoal(profit: string) {
+    const num = Number(profit).toFixed(2);
+    document.getElementById('profit-goal').innerText = String(num);
+}
+
+function setProfitTime(choice: number) {
+    if (choice == 1) {
         document.getElementById('profit-time').innerText = 'Profit Today';
-    } else if (profit == 2) {
+    } else if (choice == 2) {
         document.getElementById('profit-time').innerText = 'Profit This Week';
-    } else if (profit == 3) {
+    } else if (choice == 3) {
         document.getElementById('profit-time').innerText = 'Profit This Month';
     }
 }
 
-function setProfitGoal(profit: string) {
-    document.getElementById('profit-goal').innerText = profit;
-}
-
 function calculatePercentage(profit: number, goal: number) {
-    const percentage = ((profit / goal) * 100).toFixed(2);
-    console.log(percentage);
-    return percentage;
+    return Math.round((profit / goal) * 100);
 }
 
 
@@ -78,17 +91,4 @@ function calculatePercentage(profit: number, goal: number) {
  * Test Functions
  */
 
-console.log('test');
-setPercentage(calculatePercentage(250, 279));
 
-console.log("test2");
-setProfit("1000");
-
-console.log("test3");
-setProfitTime(3);
-
-console.log("test4");
-setProfitGoal('279');
-
-console.log("test5");
-setPercentage(calculatePercentage(1, 9));
