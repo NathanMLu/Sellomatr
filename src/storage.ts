@@ -1,4 +1,3 @@
-const time = 55;// Define your storage data here
 export interface Storage {} // eslint-disable-line
 
 export function getStorageData(): Promise<Storage> {
