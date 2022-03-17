@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.7",
+    "@sendgrid/mail": "^7.6.2",
     "normalize.css": "^8.0.1"
   },
   "browserslist": "> 0.25%, not dead",
