@@ -3,6 +3,8 @@ import { initializeStorageWithDefaults } from './storage';
 chrome.runtime.onInstalled.addListener(async () => {
     await initializeStorageWithDefaults({});
 
+
+
     // function newOrder() {
     //   console.log("Testing Order")
     //   // Building URL
