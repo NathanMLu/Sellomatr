@@ -1,31 +1,62 @@
-import { initializeStorageWithDefaults } from './storage';
+import {initializeStorageWithDefaults} from './storage';
 
 chrome.runtime.onInstalled.addListener(async () => {
     await initializeStorageWithDefaults({});
 
+    function authenticateUser() {
+        const EbayAuthToken = require('ebay-oauth-nodejs-client');
 
+        // Permission scopes for generated token
+        const scopes = ['https://api.ebay.com/oauth/api_scope/sell.fulfillment'];
 
-    // function newOrder() {
-    //   console.log("Testing Order")
-    //   // Building URL
-    //   const url = new URL("https://api.ebay.com/sell/fulfillment/v1/order")
-    //   url.searchParams.append("limit", "5");
-    //
-    //   // orderIds=string&filter=FilterField&limit=string&offset=string&fieldGroups=string
-    //
-    //   fetch(url.href).then(function(response) {
-    //     return response.json();
-    //   }).then(function(data) {
-    //     console.log(data);
-    //   }).catch(function() {
-    //     console.log("Server error, unable to grab from eBay API");
-    //   });
-    // }
-    //
-    // console.log("aloha");
-    // newOrder();
+        // Eventually want to get this from Chrome extension storage for security
+        const ebayAuthToken = new EbayAuthToken({
+            // removed for now, but will be replaced with a real client id
+        });
 
-    //authenticateUser();
+        //const clientScope = 'https://api.ebay.com/oauth/api_scope';
+        (async () => {
+            //const authToken = await ebayAuthToken.getApplicationToken('PRODUCTION', clientScope);
+            //console.log(authToken);
+
+            const options = {state: 'custom-state-value', prompt: 'login'};
+            const authUrl = await ebayAuthToken.generateUserAuthorizationUrl('PRODUCTION', scopes, options);
+            let accessToken;
+
+            await chrome.tabs.create({url: authUrl}).then(() => {
+                chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+                    if (tabId === tab.id && changeInfo.status === 'complete') {
+                        try {
+                            const token = await ebayAuthToken.exchangeCodeForAccessToken('PRODUCTION', new URL(tab.url).searchParams.get('code'));
+                            console.log(typeof token);
+                            accessToken = JSON.parse(token).access_token;
+                            console.log("Access Token: ", accessToken);
+
+                            console.log("Getting order!");
+                            const url = new URL("https://api.ebay.com/sell/fulfillment/v1/order")
+                            url.searchParams.append("limit", "5");
+                            console.log(url.href);
+
+                            const response = await fetch(url.href, {
+                                method: 'GET',
+                                headers: {
+                                    'Authorization': `Bearer ${accessToken}`,
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json'
+                                }
+                            });
+
+                            console.log(response.json());
+                        } catch (e) {
+                            console.log(e);
+                        }
+                    }
+                });
+            });
+        })();
+    }
+
+    authenticateUser();
 
     console.log('Sellomatr has been successfully installed!');
 });
