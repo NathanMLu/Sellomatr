@@ -84,39 +84,3 @@ function calculatePercentage(profit: number, goal: number) {
 /**
  * Test Functions
  */
-
-
-
-// function getOrders() {
-//     console.log("Testing Order")
-//     // Building URL
-//     const url = new URL("https://api.ebay.com/sell/fulfillment/v1/order")
-//     url.searchParams.append("limit", "5");
-//
-//     // orderIds=string&filter=FilterField&limit=string&offset=string&fieldGroups=string
-//
-//     fetch(url.href).then(function(response) {
-//         return response.json();
-//     }).then(function(data) {
-//         console.log(data);
-//     }).catch(function() {
-//         console.log("Server error, unable to grab from eBay API");
-//     });
-// }
-//
-//
-// getOrders();
-//authenticateUser();
-
-
-// //for sending a message
-// chrome.runtime.sendMessage({greeting: "hello"}, function(response) {
-//
-// });
-//
-// //for listening any message which comes from runtime
-// chrome.runtime.onMessage.addListener(messageReceived);
-//
-// function messageReceived(msg) {
-//     // Do your work here
-// }

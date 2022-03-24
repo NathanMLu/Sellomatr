@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {getStorageItem, setStorageData, setStorageItem} from './storage';
 
 /*
@@ -15,10 +14,102 @@ function callback() {
 
      // Get the token from the server
      const EbayAuthToken = require('ebay-oauth-nodejs-client');
-     const ebayAuthToken = new EbayAuthToken({
-         // Hidden for obvious reasons ;-;
+
+     const fetchKeys = await fetch('https://sellomatr.herokuapp.com/keys', {
+         method: 'POST',
+         headers: {
+             'Content-Type': 'application/json',
+             'Accept': 'application/json'
+         },
+         body: JSON.stringify({ })
+     })
+
+     const fetchIv = await fetch('https://sellomatr.herokuapp.com/iv', {
+         method: 'POST',
+         headers: {
+             'Content-Type': 'application/json',
+             'Accept': 'application/json'
+         },
+         body: JSON.stringify({ })
+     })
+
+     const fetchSalt = await fetch('https://sellomatr.herokuapp.com/salt', {
+         method: 'POST',
+         headers: {
+             'Content-Type': 'application/json',
+             'Accept': 'application/json'
+         },
+         body: JSON.stringify({ })
+     })
+
+     const encryptedKeys = await fetchKeys.text();
+     const iv = await fetchIv.text();
+     const salt = await fetchSalt.text();
+
+     //const keys = await JSON.parse(encryptedKeys);
+     const CryptoJS = await require("crypto-js");
+
+     // cipher = AES.new(key, AES.MODE_CBC, iv=iv)
+     // original_data = unpad(cipher.decrypt(ciphered_data), AES.block_size)
+     // const encrypted = CryptoJS.AES.encrypt("TestBird", "test");
+     // console.log("Encrypted: ", encrypted.toString());
+     //
+     // const decrypted = CryptoJS.AES.decrypt(encrypted, "test").toString(CryptoJS.enc.Utf8);
+     // console.log("Decrypted: ", decrypted);
+     //
+     // console.log("Encrypted client_id: ", keys.client_id, " salt: ", salt, " iv: ", iv);
+     // const client_id_decrypted = CryptoJS.AES.decrypt(keys.client_id, salt.toString()).toString(CryptoJS.enc.Utf8);
+     // console.log("Decrypted: ", client_id_decrypted);
+
+     console.log(encryptedKeys);
+
+     const plaintextArray = await CryptoJS.AES.decrypt(
+         {ciphertext:  encryptedKeys},
+         salt,
+         {iv: iv}
+     );
+
+     console.log("Raw decrypted: ", plaintextArray);
+     console.log("To String: ", plaintextArray.toString());
+     // console.log(plaintextArray.toString(CryptoJS.enc.Utf8));
+     //
+     // const dcBase64String = plaintextArray.toString(CryptoJS.enc.Base64);
+     // console.log("Decrypted: ", dcBase64String);
+     // console.log("Decrypted: ", plaintextArray);
+     // // plain text array to string
+     // // const plaintext = plaintextArray.toString(CryptoJS.enc.Utf8);
+     // // console.log("Decrypted: ", {plaintext});
+     // // const client_id = JSON.parse(plaintext);
+     // console.log("Decrypted: ", plaintextArray.toString());
+
+
+
+
+
+
+
+
+     // const AESDecrypted = await CryptoJS.algo.AES.createDecryptor(salt, {
+     //     iv: iv,
+     // });
+     //
+     // console.log("IV: ", iv, "\nSalt: ", salt, "\nKeys: ", keys);
+     //
+     // const decryptedKeys = await AESDecrypted.finalize(keys);
+     // console.log("Decrypted Keys: ", decryptedKeys);
+
+     // const ebayAuthToken = await new EbayAuthToken({
+     //     clientId: AESDecrypted.process(keys.client_id),
+     //     clientSecret: AESDecrypted.process(keys.client_secret),
+     //     redirectUri: AESDecrypted.process(keys.redirect_uri),
+     // });
+
+     const ebayAuthToken = await new EbayAuthToken({
+         clientId: 'NathanLu-Sellomat-PRD-16ae2d65c-fa62dee0',
+         clientSecret: 'PRD-6ae2d65c31c2-c915-46d1-ab4f-c3d7',
+         redirectUri: 'Nathan_Lu-NathanLu-Sellom-wjsurbu'
      });
-     
+
      // Client scopes
      const scopes = [
          'https://api.ebay.com/oauth/api_scope/sell.fulfillment'
