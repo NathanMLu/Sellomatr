@@ -29,7 +29,7 @@ function decrypt(encrypted: string, iv: string, salt: string): string {
     return decrypted;
 }
 
-async function authenticateUser(refreshToken?: string) {
+async function authenticateEbayUser(refreshToken?: string) {
 
     // Get the token from the server
     const EbayAuthToken = await require('ebay-oauth-nodejs-client');
@@ -70,11 +70,11 @@ async function authenticateUser(refreshToken?: string) {
         //, prompt: 'login'
         const authUrl = await ebayAuthToken.generateUserAuthorizationUrl('PRODUCTION', scopes, options);
 
-        await redirectToLogin(authUrl, ebayAuthToken);
+        await redirectToEbayLogin(authUrl, ebayAuthToken);
     }
 }
 
-async function redirectToLogin(authUrl: string, ebayAuthToken: any) {
+async function redirectToEbayLogin(authUrl: string, ebayAuthToken: any) {
     // Create a new window with url
     await chrome.tabs.create({url: authUrl}).then(() => {
         chrome.tabs.onUpdated.addListener(createTokens);
@@ -157,7 +157,7 @@ chrome.runtime.onMessage.addListener((request: any, sender: any, sendResponse: a
 });
 
 chrome.runtime.onInstalled.addListener(async () => {
-    await authenticateUser();
+    await authenticateEbayUser();
 
     console.log('Sellomatr has been successfully installed!');
     return true;
