@@ -22,7 +22,7 @@ _When you list a new item:_
 - [ ] Upload images to eBay listing from your local storage
 - [ ] Updates spreadsheet to add new listing
 
-###_**And much more!**_
+### _**And much more!**_
 
 ## Installation
 _Pending public release on Chrome Web Store._
