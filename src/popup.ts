@@ -1,4 +1,5 @@
 import '../styles/popup.scss';
+import {on} from "process";
 
 /**
  * Event Listeners
@@ -25,16 +26,17 @@ document.getElementById('open-ebay').addEventListener('click', () => {
     );
 });
 
-document.getElementById('open-calculator').addEventListener('click', () => {
-    const calculatorURL = "https://docs.google.com/spreadsheets/d/1MDSxxPRpJI7fpQgjq1vVuPt6wos-gYPfp1TBlAKNxpY/edit#gid=154520879";
-    chrome.tabs.create({url: calculatorURL}).then(r =>
-        console.log(r)
-    );
-});
+// document.getElementById('open-calculator').addEventListener('click', () => {
+//     const calculatorURL = "https://docs.google.com/spreadsheets/d/1MDSxxPRpJI7fpQgjq1vVuPt6wos-gYPfp1TBlAKNxpY/edit#gid=154520879";
+//     chrome.tabs.create({url: calculatorURL}).then(r =>
+//         console.log(r)
+//     );
+// });
 
 /**
  * Helper Functions
  */
+
 
 function updateAll(profit: number, goal: number, choice: number) {
     setProfit(String(profit));
@@ -84,3 +86,30 @@ function calculatePercentage(profit: number, goal: number) {
 /**
  * Test Functions
  */
+
+document.getElementById('sync-settings').addEventListener('click', () => {
+    console.log("Client requested sync");
+    try {
+        chrome.runtime.sendMessage({
+            method: 'sync',
+        }, function (response) {
+            console.log(response);
+        });
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+chrome.runtime.onMessage.addListener(callback);
+function callback(request: any, sender: any, sendResponse: any) {
+    if (request) {
+        if (request.method == 'sync') {
+            console.log("Request updateAll with data:" + request.data);
+            updateAll(request.data.profit, request.data.goal, request.data.choice);
+        }
+        // } else if (obj.method == 'othermethod') {
+        //
+        // }
+    }
+    return true;
+}

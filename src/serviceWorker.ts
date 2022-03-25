@@ -6,13 +6,34 @@ const CryptoJS = require("crypto-js");
  * Helper Functions
  */
 
-function callback() {
-    // TODO: create sync function to update the UI (call only when popup is opened or when token is generated)
+function sync() {
+    console.log("Syncing...");
+
+    const data = {
+        profit: 50.293847,
+        goal: 227.824,
+        choice: 2,
+    }
+
+    console.log("Sending data..." + data);
+    try {
+        chrome.runtime.sendMessage({
+            method: 'sync',
+            data: data
+        }, function (response) {
+            console.log(response);
+        });
+    } catch (e) {
+        console.log(e);
+    }
 
     getOrders();
 }
 
 function decrypt(encrypted: string, iv: string, salt: string): string {
+    // console.log("Decrypting...");
+    // console.log("encrypted: " + encrypted + " iv: " + iv + " salt: " + salt);
+
     iv = CryptoJS.enc.Utf8.parse(iv);
     salt = CryptoJS.enc.Utf8.parse(salt);
 
@@ -20,7 +41,10 @@ function decrypt(encrypted: string, iv: string, salt: string): string {
         iv: iv,
         mode: CryptoJS.mode.CBC,
     });
+
+    // console.log("Decrypted: " + decrypted);
     decrypted = decrypted.toString(CryptoJS.enc.Utf8);
+    // console.log("Decrypted (parsed): " + decrypted);
 
     return decrypted;
 }
@@ -28,7 +52,7 @@ function decrypt(encrypted: string, iv: string, salt: string): string {
 async function authenticateUser(refreshToken?: string) {
 
     // Get the token from the server
-    const EbayAuthToken = require('ebay-oauth-nodejs-client');
+    const EbayAuthToken = await require('ebay-oauth-nodejs-client');
 
     const fetchKeys = await fetch('https://sellomatr.herokuapp.com/keys', {
         method: 'POST',
@@ -39,33 +63,15 @@ async function authenticateUser(refreshToken?: string) {
         body: JSON.stringify({})
     })
 
-    const fetchIv = await fetch('https://sellomatr.herokuapp.com/iv', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({})
-    })
-
-    const fetchSalt = await fetch('https://sellomatr.herokuapp.com/salt', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({})
-    })
-
     const ek = await fetchKeys.text();
-    const iv = await fetchIv.text();
-    const salt = await fetchSalt.text();
-    const encryptedKeys = JSON.parse(ek);
+    const encryptedKeys = await JSON.parse(ek);
+
+    // console.log("clientId: ", decrypt(encryptedKeys.client_id, iv, salt), "clientSecret: ", decrypt(encryptedKeys.client_secret, iv, salt), "redirectUri: ", decrypt(encryptedKeys.redirect_uri, iv, salt));
 
     const ebayAuthToken = await new EbayAuthToken({
-        clientId: decrypt(encryptedKeys.client_id, iv, salt),
-        clientSecret: decrypt(encryptedKeys.client_secret, iv, salt),
-        redirectUri: decrypt(encryptedKeys.redirect_uri, iv, salt),
+        clientId: decrypt(encryptedKeys.client_id, encryptedKeys.iv, encryptedKeys.salt),
+        clientSecret: decrypt(encryptedKeys.client_secret, encryptedKeys.iv, encryptedKeys.salt),
+        redirectUri: decrypt(encryptedKeys.redirect_uri, encryptedKeys.iv, encryptedKeys.salt),
     });
 
     // Client scopes
@@ -115,8 +121,7 @@ async function redirectToLogin(authUrl: string, ebayAuthToken: any) {
                         await chrome.tabs.remove(tabId);
                         console.log("Successfully signed into eBay!");
 
-                        // Callback
-                        callback();
+                        sync();
 
                     } catch (e) {
                         console.log(e);
@@ -153,15 +158,28 @@ function getOrders() {
 
 
 /*
- * On extension install
+ * Listeners
  */
+
+chrome.runtime.onMessage.addListener(callback);
+function callback(request: any, sender: any, sendResponse: any) {
+    if (request) {
+        if (request.method == 'sync') {
+            console.log("Grabbing data from serviceWorker to sync");
+            sync();
+        }
+        // } else if (obj.method == 'othermethod') {
+        //
+        // }
+    }
+    return true;
+}
 
 chrome.runtime.onInstalled.addListener(async () => {
     await authenticateUser();
 
     console.log('Sellomatr has been successfully installed!');
 });
-
 
 /*
  * DEVELOPMENT ONLY, NEVER PUT THIS IN PRODUCTION
