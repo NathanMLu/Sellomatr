@@ -1,6 +1,11 @@
-# Tech4All
+# Sellomatr - Resale made easy
+
+![image](static/icons/icon.png){: style="float: right; margin-right: 1em;"}
+
+
 
 # Plans
+
 - Automatically input all sales into a spreadsheet
 - Send emails with how much I made that week
 - Automatically print label when order is placed
@@ -10,38 +15,31 @@
 - Easier listing tool?
 
 # Technologies
+
 - eBay API
 - Sheets API
 - Javascript
 - Kiosk Printing Chrome
 - Chrome Extension
 
-#Popup
+# Popup
+
 - Daily/monthly/yearly earnings
 - Include link for calculator
 - Include spreadsheet link
 
-#Options
+# Options
+
 - Input all API keys
 - Change confirmation message for each order (make personal)
-- 
-- 
-
-![Chrome Extension Webpack](https://user-images.githubusercontent.com/21238816/147307879-a3cb179e-3368-412a-88db-284474183884.png)
-Get started with Chrome extensions development using webpack, TypeScript, Sass, and more.
-
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/sszczep)
-
-## Announcements
-
-*Nothing to see here yet.*
 
 ## Features
 
-Chrome Extension Webpack is a simple boilerplate for fast extension development. It helps writing modern TypeScript code with SCSS support. 
-It is meant to be lightweight and scalable, hence easily adaptable to your needs.
+Chrome Extension Webpack is a simple boilerplate for fast extension development. It helps writing modern TypeScript code
+with SCSS support. It is meant to be lightweight and scalable, hence easily adaptable to your needs.
 
 It features:
+
 - [Chrome Extension Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/)
 - [Webpack 5](https://webpack.js.org)
 - [TypeScript](https://www.typescriptlang.org)
@@ -50,7 +48,9 @@ It features:
 - [ESLint](https://eslint.org/)
 - [Prettier](https://prettier.io/)
 
-If you need React support, please check this awesome boilerplate created by [Michael Xieyang Liu](https://github.com/lxieyang): [chrome-extension-boilerplate-react](https://github.com/lxieyang/chrome-extension-boilerplate-react).
+If you need React support, please check this awesome boilerplate created
+by [Michael Xieyang Liu](https://github.com/lxieyang): [chrome-extension-boilerplate-react](https://github.com/lxieyang/chrome-extension-boilerplate-react)
+.
 
 ## Getting started
 
@@ -69,19 +69,27 @@ If you need React support, please check this awesome boilerplate created by [Mic
 ### Project structure
 
 All TypeScript files are placed in `src` directory. There are few files already prepared for you:
-- `contentScript.ts` - the [content script](https://developer.chrome.com/docs/extensions/mv3/content_scripts/) to be run in the context of selected web pages
-- `serviceWorker.ts` - the [background script](https://developer.chrome.com/docs/extensions/mv3/service_workers/) usually used to initialize the extension and monitor events
-- `storage.ts` - little helper utility to easily manage the extension's [storage](https://developer.chrome.com/docs/extensions/reference/storage/). In this particular project we are using *synced* storage area
+
+- `contentScript.ts` - the [content script](https://developer.chrome.com/docs/extensions/mv3/content_scripts/) to be run
+  in the context of selected web pages
+- `serviceWorker.ts` - the [background script](https://developer.chrome.com/docs/extensions/mv3/service_workers/)
+  usually used to initialize the extension and monitor events
+- `storage.ts` - little helper utility to easily manage the
+  extension's [storage](https://developer.chrome.com/docs/extensions/reference/storage/). In this particular project we
+  are using *synced* storage area
 - `popup.ts` and `options.ts` - per-page scripts
 
-Style files are placed in `styles` directory. There you can find per-page stylesheets and `common.scss` with stylings common across the pages.
-We also use [Normalize.css](https://necolas.github.io/normalize.css/) so your extensions look good and consistent wherever they are installed.
+Style files are placed in `styles` directory. There you can find per-page stylesheets and `common.scss` with stylings
+common across the pages. We also use [Normalize.css](https://necolas.github.io/normalize.css/) so your extensions look
+good and consistent wherever they are installed.
 
-`static` directory includes all the files to be copied over to the final build. It consists of `manifest.json` defining our extension, `.html` pages and icon set.
+`static` directory includes all the files to be copied over to the final build. It consists of `manifest.json` defining
+our extension, `.html` pages and icon set.
 
 ### Pages
 
-Currently, there are two pages: `popup.html` and `options.html`, which can be found in `static` directory. Both have corresponding script and style files at `src` and `styles` directories accordingly.
+Currently, there are two pages: `popup.html` and `options.html`, which can be found in `static` directory. Both have
+corresponding script and style files at `src` and `styles` directories accordingly.
 
 #### Popup
 
@@ -94,11 +102,16 @@ Read more [here](https://developer.chrome.com/docs/extensions/reference/browserA
 
 Options page shown by right-clicking the extension icon in the toolbar and selecting *Options*.
 
-There are two available types of options pages: `full page` and `embedded`. By default it is set to `full page`. You can change that behaviour in the `manifest.json`:
+There are two available types of options pages: `full page` and `embedded`. By default it is set to `full page`. You can
+change that behaviour in the `manifest.json`:
 
 ```javascript
-"open_in_tab": true // For `full page`
-"open_in_tab": false // For `embedded`
+"open_in_tab"
+:
+true // For `full page`
+"open_in_tab"
+:
+false // For `embedded`
 ```
 
 Read more [here](https://developer.chrome.com/docs/extensions/mv3/options/).
@@ -108,7 +121,8 @@ Read more [here](https://developer.chrome.com/docs/extensions/mv3/options/).
 I have prepared a bunch of helper functions to simplify storage usage:
 
 ```typescript
-function getStorageData(): Promise<Storage> {...}
+function getStorageData(): Promise<Storage> {...
+}
 
 // Example usage
 const storageData = await getStorageData();
@@ -116,17 +130,19 @@ console.log(storageData);
 ```
 
 ```typescript
-function setStorageData(data: Storage): Promise<void> {...}
+function setStorageData(data: Storage): Promise<void> {...
+}
 
 // Example usage
-const newStorageData = { visible: true };
+const newStorageData = {visible: true};
 await setStorageData(newStorageData);
 ```
 
 ```typescript
 function getStorageItem<Key extends keyof Storage>(
-  key: Key,
-): Promise<Storage[Key]> {...}
+    key: Key,
+): Promise<Storage[Key]> {...
+}
 
 // Example usage
 const isVisible = await getStorageItem('visible');
@@ -135,29 +151,32 @@ console.log(isVisible);
 
 ```typescript
 function setStorageItem<Key extends keyof Storage>(
-  key: Key,
-  value: Storage[Key],
-): Promise<void> {...}
+    key: Key,
+    value: Storage[Key],
+): Promise<void> {...
+}
 
 // Example usage
 await setStorageItem('visible', true);
 ```
 
 ```typescript
-async function initializeStorageWithDefaults(defaults: Storage) {...}
+async function initializeStorageWithDefaults(defaults: Storage) {...
+}
 
 // If `visible` property is already set in the storage, it won't be replaced.
 // This function might be used in `onInstalled` event in service worker
 // to set default storage values on extension's initialization.
-const defaultStorageData = { visible: false };
+const defaultStorageData = {visible: false};
 await initializeStorageWithDefaults(defaultStorageData);
 ```
 
-All of the above functions use `Storage` interface which guarantees type safety. In the above use-case scenario, it could be declared as:
+All of the above functions use `Storage` interface which guarantees type safety. In the above use-case scenario, it
+could be declared as:
 
 ```typescript
 interface Storage {
-  visible: boolean;
+    visible: boolean;
 }
 ```
 
@@ -167,41 +186,59 @@ interface Storage {
 
 ### Content scripts
 
-Content scripts are files that run in the context of web pages. They live in an isolated world (private execution environment), so they do not conflict with the page or other extensions' content sripts.
+Content scripts are files that run in the context of web pages. They live in an isolated world (private execution
+environment), so they do not conflict with the page or other extensions' content sripts.
 
 The content script can be *declared statically* or *programmatically injected*.
 
 #### Static declaration (match patterns)
 
-Statically declared scripts are registered in the manifest file under the `"content_scripts"` field. They all must specify corresponding [match patterns](https://developer.chrome.com/docs/extensions/mv3/match_patterns/). In this boilerplate, the content script will be injected under all URLs by default. You can change that behaviour in `manifest.json` file. 
+Statically declared scripts are registered in the manifest file under the `"content_scripts"` field. They all must
+specify corresponding [match patterns](https://developer.chrome.com/docs/extensions/mv3/match_patterns/). In this
+boilerplate, the content script will be injected under all URLs by default. You can change that behaviour
+in `manifest.json` file.
 
 You can edit the default content script at `src/contentScript.ts`.
 
 #### Programmatic injection
 
-You can also inject the scripts programmatically. It might come in handy when you want to inject the script only in response to certain events. You also need to set extra permissions in manifest file. Read more about programmatic injection [here](https://developer.chrome.com/docs/extensions/mv3/content_scripts/#programmatic).
+You can also inject the scripts programmatically. It might come in handy when you want to inject the script only in
+response to certain events. You also need to set extra permissions in manifest file. Read more about programmatic
+injection [here](https://developer.chrome.com/docs/extensions/mv3/content_scripts/#programmatic).
 
 #### Adding new content script
 
-To add a new content script, create a new script file in `src` directory. You also need to create a new entry in the *webpack* config file - `webpack.common.js`:
+To add a new content script, create a new script file in `src` directory. You also need to create a new entry in the *
+webpack* config file - `webpack.common.js`:
 
 ```javascript
 entry: {
-  serviceWorker: './src/serviceWorker.ts',
-  contentScript: './src/contentScript.ts',
-  popup: './src/popup.ts',
-  options: './src/options.ts',
+    serviceWorker: './src/serviceWorker.ts',
+        contentScript
+:
+    './src/contentScript.ts',
+        popup
+:
+    './src/popup.ts',
+        options
+:
+    './src/options.ts',
 
-  // New entry down here
-  myNewContentScript: './src/myNewContentScript.ts',
-},
+        // New entry down here
+        myNewContentScript
+:
+    './src/myNewContentScript.ts',
+}
+,
 ```
 
 In case of static declaration, you might also need to modify the manifest file.
 
 ### Service worker (*old background pages*)
 
-*If you are coming from Manifest V2, you might want to read this page first: [Migrating from background pages to service workers](https://developer.chrome.com/docs/extensions/mv3/migrating_to_service_workers/).*
+*If you are coming from Manifest V2, you might want to read this page
+first: [Migrating from background pages to service workers](https://developer.chrome.com/docs/extensions/mv3/migrating_to_service_workers/)
+.*
 
 As per docs:
 
@@ -211,12 +248,13 @@ The most common event you will listen to is `chrome.runtime.onInstalled`:
 
 ```typescript
 chrome.runtime.onInstalled.addListener(async () => {
-  // Here goes everything you want to execute after extension initialization
-  console.log('Extension successfully installed!');
+    // Here goes everything you want to execute after extension initialization
+    console.log('Extension successfully installed!');
 });
 ```
 
-It is also the perfect (**and the only**) place to create a [context menu](https://developer.chrome.com/docs/extensions/reference/contextMenus/).
+It is also the perfect (**and the only**) place to create
+a [context menu](https://developer.chrome.com/docs/extensions/reference/contextMenus/).
 
 You can edit the service worker at `src/serviceWorker.ts`.
 
