@@ -1,8 +1,10 @@
-# Sellomatr
+<img src="static/icons/headline.svg" style="height: 50px; margin-top:40px">
 
 Sellomatr is a Chrome extension that helps you automate your online eBay store. 
 When a buyer purchases a product from your store, Sellomatr will automatically 
 handle everything you would normally do to fulfill the order. 
+
+
 
 ## Features
 
