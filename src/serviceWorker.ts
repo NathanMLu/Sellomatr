@@ -10,25 +10,6 @@ function callback() {
     getOrders();
 }
 
-function sync() {
-    const data = {
-        profit: 50.293847,
-        goal: 227.824,
-        choice: 2,
-    }
-
-    // console.log("Sending data..." + data);
-    try {
-        chrome.runtime.sendMessage({
-            method: 'sync',
-            data: data
-        });
-
-    } catch (e) {
-        console.log(e);
-    }
-}
-
 function decrypt(encrypted: string, iv: string, salt: string): string {
     // console.log("Decrypting...");
     // console.log("encrypted: " + encrypted + " iv: " + iv + " salt: " + salt);
@@ -85,7 +66,8 @@ async function authenticateUser(refreshToken?: string) {
         await setStorageItem('accessToken', accessToken);
     } else {
         // Generate authorization URL to redirect the user
-        const options = {state: 'sellomatr-state', prompt: 'login'};
+        const options = {state: 'sellomatr-state'};
+        //, prompt: 'login'
         const authUrl = await ebayAuthToken.generateUserAuthorizationUrl('PRODUCTION', scopes, options);
 
         await redirectToLogin(authUrl, ebayAuthToken);
@@ -148,9 +130,9 @@ function getOrders() {
         });
 
         const orders = await response.json();
-        console.log(orders);
+        //console.log(orders);
         const item = orders.orders[0].orderId;
-        console.log(item);
+        console.log("Latest Order ID:" + item);
 
     })();
 }
@@ -163,8 +145,12 @@ function getOrders() {
 chrome.runtime.onMessage.addListener((request: any, sender: any, sendResponse: any) => {
     if (request) {
         if (request.method == 'sync') {
-            // console.log("Grabbing data from serviceWorker to sync");
-            sync();
+            sendResponse({
+                success: true,
+                profit: 20.293847,
+                goal: 227.824,
+                choice: 2,
+            });
         }
     }
     return true;

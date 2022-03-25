@@ -55,24 +55,16 @@ function calculatePercentage(profit: number, goal: number) {
  */
 
 document.getElementById('sync-settings').addEventListener('click', () => {
-    // console.log("Client requested sync");
     try {
         chrome.runtime.sendMessage({
             method: 'sync',
+        }, (response) => {
+            if (response.success) {
+                updateAll(response.profit, response.goal, response.choice);
+            }
         });
     } catch (e) {
         console.log(e);
-    }
-    return true;
-});
-
-chrome.runtime.onMessage.addListener((request: any, sender: any, sendResponse: any) => {
-    if (request) {
-        if (request.method == 'sync') {
-            // console.log("Request updateAll with data:" + request.data);
-            console.log(request.data.profit, request.data.goal, request.data.choice);
-            updateAll(request.data.profit, request.data.goal, request.data.choice);
-        }
     }
     return true;
 });
