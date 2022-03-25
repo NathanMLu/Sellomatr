@@ -1,42 +1,9 @@
 import '../styles/popup.scss';
-import {on} from "process";
 
-/**
- * Event Listeners
- */
-
-document.getElementById('big-title').addEventListener('click', () => {
-    const sellomatrURL = "https://github.com/NathanMLu/Sellomatr";
-    chrome.tabs.create({url: sellomatrURL}).then(r =>
-        console.log(r)
-    );
-})
-
-document.getElementById('open-spreadsheet').addEventListener('click', () => {
-    const spreadSheetURL = "https://docs.google.com/spreadsheets/d/1Ps3S6bI24d-dK7UHJ6cOop9g7pkSgKNLbte9OJerOSw/edit#gid=0";
-    chrome.tabs.create({url: spreadSheetURL}).then(r =>
-        console.log(r)
-    );
-});
-
-document.getElementById('open-ebay').addEventListener('click', () => {
-    const ebayURL = "https://www.ebay.com/sh/ord/?filter=status:ALL_ORDERS";
-    chrome.tabs.create({url: ebayURL}).then(r =>
-        console.log(r)
-    );
-});
-
-// document.getElementById('open-calculator').addEventListener('click', () => {
-//     const calculatorURL = "https://docs.google.com/spreadsheets/d/1MDSxxPRpJI7fpQgjq1vVuPt6wos-gYPfp1TBlAKNxpY/edit#gid=154520879";
-//     chrome.tabs.create({url: calculatorURL}).then(r =>
-//         console.log(r)
-//     );
-// });
 
 /**
  * Helper Functions
  */
-
 
 function updateAll(profit: number, goal: number, choice: number) {
     setProfit(String(profit));
@@ -84,32 +51,61 @@ function calculatePercentage(profit: number, goal: number) {
 
 
 /**
- * Test Functions
+ * Listeners
  */
 
 document.getElementById('sync-settings').addEventListener('click', () => {
-    console.log("Client requested sync");
+    // console.log("Client requested sync");
     try {
         chrome.runtime.sendMessage({
             method: 'sync',
-        }, function (response) {
-            console.log(response);
         });
     } catch (e) {
         console.log(e);
     }
+    return true;
 });
 
-chrome.runtime.onMessage.addListener(callback);
-function callback(request: any, sender: any, sendResponse: any) {
+chrome.runtime.onMessage.addListener((request: any, sender: any, sendResponse: any) => {
     if (request) {
         if (request.method == 'sync') {
-            console.log("Request updateAll with data:" + request.data);
+            // console.log("Request updateAll with data:" + request.data);
+            console.log(request.data.profit, request.data.goal, request.data.choice);
             updateAll(request.data.profit, request.data.goal, request.data.choice);
         }
-        // } else if (obj.method == 'othermethod') {
-        //
-        // }
     }
     return true;
-}
+});
+
+
+/*
+ * Popup Buttons
+ */
+
+document.getElementById('big-title').addEventListener('click', () => {
+    const sellomatrURL = "https://github.com/NathanMLu/Sellomatr";
+    chrome.tabs.create({url: sellomatrURL}).then(r =>
+        console.log(r)
+    );
+})
+
+document.getElementById('open-spreadsheet').addEventListener('click', () => {
+    const spreadSheetURL = "https://docs.google.com/spreadsheets/d/1Ps3S6bI24d-dK7UHJ6cOop9g7pkSgKNLbte9OJerOSw/edit#gid=0";
+    chrome.tabs.create({url: spreadSheetURL}).then(r =>
+        console.log(r)
+    );
+});
+
+document.getElementById('open-ebay').addEventListener('click', () => {
+    const ebayURL = "https://www.ebay.com/sh/ord/?filter=status:ALL_ORDERS";
+    chrome.tabs.create({url: ebayURL}).then(r =>
+        console.log(r)
+    );
+});
+
+// document.getElementById('open-calculator').addEventListener('click', () => {
+//     const calculatorURL = "https://docs.google.com/spreadsheets/d/1MDSxxPRpJI7fpQgjq1vVuPt6wos-gYPfp1TBlAKNxpY/edit#gid=154520879";
+//     chrome.tabs.create({url: calculatorURL}).then(r =>
+//         console.log(r)
+//     );
+// });

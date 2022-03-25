@@ -6,28 +6,27 @@ const CryptoJS = require("crypto-js");
  * Helper Functions
  */
 
-function sync() {
-    console.log("Syncing...");
+function callback() {
+    getOrders();
+}
 
+function sync() {
     const data = {
         profit: 50.293847,
         goal: 227.824,
         choice: 2,
     }
 
-    console.log("Sending data..." + data);
+    // console.log("Sending data..." + data);
     try {
         chrome.runtime.sendMessage({
             method: 'sync',
             data: data
-        }, function (response) {
-            console.log(response);
         });
+
     } catch (e) {
         console.log(e);
     }
-
-    getOrders();
 }
 
 function decrypt(encrypted: string, iv: string, salt: string): string {
@@ -121,7 +120,7 @@ async function redirectToLogin(authUrl: string, ebayAuthToken: any) {
                         await chrome.tabs.remove(tabId);
                         console.log("Successfully signed into eBay!");
 
-                        sync();
+                        callback();
 
                     } catch (e) {
                         console.log(e);
@@ -161,35 +160,32 @@ function getOrders() {
  * Listeners
  */
 
-chrome.runtime.onMessage.addListener(callback);
-function callback(request: any, sender: any, sendResponse: any) {
+chrome.runtime.onMessage.addListener((request: any, sender: any, sendResponse: any) => {
     if (request) {
         if (request.method == 'sync') {
-            console.log("Grabbing data from serviceWorker to sync");
+            // console.log("Grabbing data from serviceWorker to sync");
             sync();
         }
-        // } else if (obj.method == 'othermethod') {
-        //
-        // }
     }
     return true;
-}
+});
 
 chrome.runtime.onInstalled.addListener(async () => {
     await authenticateUser();
 
     console.log('Sellomatr has been successfully installed!');
+    return true;
 });
+
 
 /*
  * DEVELOPMENT ONLY, NEVER PUT THIS IN PRODUCTION
  */
 
-// Log storage changes, might be safely removed
-// chrome.storage.onChanged.addListener((changes) => {
-//     for (const [key, value] of Object.entries(changes)) {
-//         console.log(
-//             `"${key}" changed from "${value.oldValue}" to "${value.newValue}"`,
-//         );
-//     }
-// });
+chrome.storage.onChanged.addListener((changes) => {
+    for (const [key, value] of Object.entries(changes)) {
+        console.log(
+            `"${key}" changed from "${value.oldValue}" to "${value.newValue}"`,
+        );
+    }
+});
