@@ -113,6 +113,11 @@ async function redirectToEbayLogin(authUrl: string, ebayAuthToken: any) {
     });
 }
 
+async function authenticateSheetsUser() {
+    const {OAuth2Client} = require('google-auth-library');
+
+}
+
 function getOrders() {
     const url = new URL("https://api.ebay.com/sell/fulfillment/v1/order")
     url.searchParams.append("limit", "5");

@@ -30,19 +30,22 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js'],
         fallback: {
-          "fs": false,
-          // "tls": false,
-          // "net": false,
-          "path": false,
-          // "util": require.resolve('util/'),
-          // "zlib": false,
-          "http": require.resolve('stream-http'),
-          // "stream": require.resolve('stream-browserify'),
-          // "url": false,
-          // "request": require.resolve('request'),
-          "https": require.resolve('https-browserify'),
-          // "stream": require.resolve("stream-browserify"),
-          "buffer": require.resolve("buffer")
+            "fs": false,
+            "tls": false,
+            "net": false,
+            "path": false,
+            "child_process": false,
+            // "util": require.resolve('util/'),
+            // "zlib": false,
+            "http": require.resolve('stream-http'),
+            "stream": require.resolve('stream-browserify'),
+            "crypto": require.resolve("crypto-browserify"),
+            "os": require.resolve("os-browserify/browser"),
+            // "url": false,
+            // "request": require.resolve('request'),
+            "https": require.resolve('https-browserify'),
+            // "stream": require.resolve("stream-browserify"),
+            "buffer": require.resolve("buffer")
         },
     },
     output: {
@@ -63,8 +66,8 @@ module.exports = {
             patterns: [{from: 'static'}],
         }),
         new webpack.ProvidePlugin({
-          Buffer: ['buffer', 'Buffer'],
-          process: 'process/browser',
+            Buffer: ['buffer', 'Buffer'],
+            process: 'process/browser',
         }),
     ],
 };
